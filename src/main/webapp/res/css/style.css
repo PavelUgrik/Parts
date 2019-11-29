@@ -1,0 +1,35 @@
+.content {
+    max-width: 500px;
+    margin: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+   }
+
+th {
+    height: 50px;
+}
+
+.left-td {
+    text-align: left;
+    width: 50%;
+}
+
+.center-td {
+    width: 25%;
+}
+.right-td {
+    width: 25%;
+}
+
+#page-number {
+    padding: 10px;
+    text-align: center;
+}
