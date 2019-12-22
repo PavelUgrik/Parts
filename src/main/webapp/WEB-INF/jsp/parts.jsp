@@ -14,6 +14,13 @@
     </head>
     <body>
         <div class="content">
+            <div>
+                <p>Сортировать по:
+                    <a href="<c:url value="/?page=${param.page}&sort=all"/>">Все</a>
+                    <a href="<c:url value="/?page=${param.page}&sort=needed"/>">Нужные</a>
+                    <a href="<c:url value="/?page=${param.page}&sort=utility"/>">Вспомогательные</a>
+                </p>
+            </div>
             <table>
                 <thead>
                 <tr>
@@ -40,7 +47,7 @@
 
             <div id="page-number">
                 <c:forEach begin="1" end="${pageCount}" step="1" varStatus="i">
-                    <c:url value="/" var="url">
+                    <c:url value="/?sort=${param.sort}" var="url">
                         <c:param name="page" value="${i.index}"/>
                     </c:url>
                     <a href="${url}">${i.index}</a>
@@ -54,6 +61,7 @@
                     <td class="right-td">Компьютеров</td>
                 </tr>
             </table>
+
         </div>
     </body>
 </html>

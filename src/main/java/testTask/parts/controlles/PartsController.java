@@ -20,8 +20,8 @@ public class PartsController {
     }
 
     @GetMapping(value = "/")
-    public ModelAndView parts(@RequestParam(defaultValue = "1") int page) {
-        List<Part> partList = partsService.allParts(page);
+    public ModelAndView parts(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "all") String sort) {
+        List<Part> partList = partsService.allParts(page, sort);
         int partsCount = partsService.partsCount();
         int pageCount = (partsCount + 9) / 10;
         int numberOfComputers = partsService.numberOfComputers();

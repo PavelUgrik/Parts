@@ -28,6 +28,20 @@ public class PartsRepositoryImpl implements PartsRepository {
 
     @Override
     @Transactional
+    public List<Part> allPartsSortByNeed(int page) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Part ORDER BY needed DESC").setFirstResult(10 * (page - 1)).setMaxResults(10).list();
+    }
+
+    @Override
+    @Transactional
+    public List<Part> allPartsSortByUtility(int page) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Part ORDER BY needed").setFirstResult(10 * (page - 1)).setMaxResults(10).list();
+    }
+
+    @Override
+    @Transactional
     public int partsCount() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("select count (*) from Part ", Number.class).getSingleResult().intValue();
