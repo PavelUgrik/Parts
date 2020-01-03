@@ -1,32 +1,42 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: snipe
-  Date: 11.11.2019
-  Time: 17:14
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
     <head>
         <title>Parts</title>
         <link href="<c:url value="/res/css/style.css"/>" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <div class="content">
-            <div>
-                <p>Сортировать по:
-                    <a href="<c:url value="/?page=${param.page}&sort=all"/>">Все</a>
-                    <a href="<c:url value="/?page=${param.page}&sort=needed"/>">Нужные</a>
-                    <a href="<c:url value="/?page=${param.page}&sort=utility"/>">Вспомогательные</a>
-                </p>
+            <div class="topnav">
+                    <a class="active">Сортировать по:</a>
+                    <a href="<c:url value="/?sort=all"/>">Все</a>
+                    <a href="<c:url value="/?sort=needed"/>">Нужные</a>
+                    <a href="<c:url value="/?sort=utility"/>">Вспомогательные</a>
+                <div class="search-container">
+                    <form action="<c:url value="/"/>" method="get">
+                        <input type="text" placeholder="Поиск..." name="query">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
             </div>
-            <table>
+            <div class="pagination">
+                <a class="active">Страница:</a>
+                <c:forEach begin="1" end="${pageCount}" step="1" varStatus="i">
+                    <c:url value="/?sort=${param.sort}" var="url">
+                        <c:param name="page" value="${i.index}"/>
+                    </c:url>
+                    <a href="${url}">${i.index}</a>
+                </c:forEach>
+            </div>
+            <table class="main-table">
                 <thead>
                 <tr>
-                    <th class="left-td">Наименование</th>
+                    <th class="center-td">Наименование</th>
                     <th class="center-td">Необходимость</th>
-                    <th class="left-td">Количество</th>
+                    <th class="center-td">Количество</th>
+                    <th colspan="2" class="right-td-td">Действия</th>
                 </tr>
                 </thead>
                 <c:forEach var="part" items="${PartList}">
@@ -40,28 +50,19 @@
                                 нет
                             </c:if>
                         </td>
-                        <td class="right-td">${part.amount}</td>
+                        <td class="center-td">${part.amount}</td>
+                        <td><a class="edit-button" href="<c:url value="/edit/${part.id}"/>"><i class="fa fa-pencil-square-o"></i></a></td>
+                        <td><a class="delete-button" href="<c:url value="/delete/${part.id}"/>"><i class="fa fa-trash"></i></a></td>
                     </tr>
                 </c:forEach>
             </table>
 
-            <div id="page-number">
-                <c:forEach begin="1" end="${pageCount}" step="1" varStatus="i">
-                    <c:url value="/?sort=${param.sort}" var="url">
-                        <c:param name="page" value="${i.index}"/>
-                    </c:url>
-                    <a href="${url}">${i.index}</a>
-                </c:forEach>
+
+
+            <div class="clear">
+                <p>Всего можно собрать ${NumberOfComputers} компьютеров</p>
+                <a href="/add">Добавить новую деталь</a>
             </div>
-
-            <table>
-                <tr>
-                    <td class="left-td">Можно собрать</td>
-                    <td class="center-td">${NumberOfComputers}</td>
-                    <td class="right-td">Компьютеров</td>
-                </tr>
-            </table>
-
         </div>
     </body>
 </html>

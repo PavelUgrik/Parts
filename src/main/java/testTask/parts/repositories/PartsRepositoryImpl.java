@@ -54,5 +54,38 @@ public class PartsRepositoryImpl implements PartsRepository {
         return session.createQuery("select min(amount) from Part  where needed = true", Number.class).getSingleResult().intValue();
     }
 
+    @Override
+    @Transactional
+    public void add(Part part) {
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(part);
+    }
 
+    @Override
+    @Transactional
+    public void edit(Part part) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(part);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Part part) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(part);
+    }
+
+    @Override
+    @Transactional
+    public Part getById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Part.class, id);
+    }
+
+    @Override
+    @Transactional
+    public List<Part> getByName(String query) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Part where title = :queryParam").setParameter("queryParam", query).list();
+    }
 }

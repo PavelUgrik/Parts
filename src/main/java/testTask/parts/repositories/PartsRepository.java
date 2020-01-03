@@ -11,4 +11,9 @@ public interface PartsRepository {
     List<Part> allPartsSortByUtility(int page);
     int partsCount();
     int numberOfComputers();
+    void add(Part part);
+    void edit(Part part);
+    void delete(Part part);
+    Part getById(int id);
+    List<Part> getByName(String query);
 }
